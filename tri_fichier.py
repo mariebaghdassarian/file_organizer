@@ -641,7 +641,7 @@ _ui_refs = {}
 
 def set_language(lang):
     global current_lang
-    current_lang = lang
+    current_lang = lang.lower()   # "FR" → "fr", "EN" → "en"
     root.title(t("window_title"))
 
     # Onglets
