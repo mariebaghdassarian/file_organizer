@@ -1,6 +1,6 @@
 # 📁 File Organizer
 
-A desktop app to automatically sort photos, videos and screenshots into folders by date — built with Python and a clean GUI.
+A desktop app to automatically sort photos, videos, screenshots and documents into folders — built with Python and a clean GUI.
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
@@ -10,23 +10,31 @@ A desktop app to automatically sort photos, videos and screenshots into folders 
 
 ## Features
 
-- **Recursive scan** — processes all subfolders automatically, not just the root
+### 📷 Media tab — sort by date
+- **Recursive scan** — processes all subfolders automatically
 - **Smart date detection**, in priority order:
   1. EXIF metadata (photos, RAW files)
   2. Video metadata via MediaInfo (MP4, MOV, MKV…)
   3. Date parsed from filename (Android/macOS screenshots, e.g. `Screenshot_20231015_143022.png`)
-  4. File system date as fallback
+  4. File-system date as fallback
+- **Two output formats** — `YYYY/YYYY-MM` (year + month) or `YYYY` (year only)
 - **Wide format support**
-  - Images: JPG, PNG, HEIC, WEBP, GIF, BMP, TIFF + RAW formats (CR2, CR3, NEF, ARW, DNG, ORF, RW2…)
+  - Images: JPG, PNG, HEIC, WEBP, GIF, BMP, TIFF + RAW (CR2, CR3, NEF, ARW, DNG, ORF, RW2…)
   - Videos: MP4, MOV, AVI, MKV, WMV, FLV, 3GP, M4V, MTS, WEBM…
-- **Duplicate detection** — skips identical files (size + MD5 check), nothing gets overwritten
-- **Preview before sorting** — shows every move before it happens, with a confirm/cancel step
-- **Clean output structure** — organizes into `YYYY/YYYY-MM/` folders
+
+### 📄 Documents tab — sort by type
+- Automatically moves files into `PDF`, `Word`, `Excel`, `PowerPoint`, `Texte`, `Archives`, `Code` folders
+- Unknown types go to an `Autres` / `Others` folder
+
+### General
+- **Duplicate detection** — skips identical files (size + MD5), nothing gets overwritten
+- **Preview before sorting** — shows every planned move before anything happens
 - **Auto-cleanup** — removes empty folders after sorting
+- **FR / EN language switcher** — full interface translation at runtime
 
 ---
 
-## Output structure
+## Output structure (Media tab)
 
 ```
 📂 Your folder/
@@ -40,6 +48,30 @@ A desktop app to automatically sort photos, videos and screenshots into folders 
 │   └── 2023-03/
 │       └── photo.heic
 └── _A_TRIER_MANUELLEMENT/   ← files where no date could be determined
+```
+
+---
+
+## Project structure
+
+```
+file_organizer/
+├── main.py              ← entry point  (python main.py)
+├── config.py            ← window size, colours, file extensions
+├── i18n.py              ← all UI strings in FR + EN
+├── state.py             ← shared mutable state (selected folders, sort format)
+├── requirements.txt
+│
+├── core/
+│   ├── date_extractor.py   ← EXIF / video / filename / filesystem date logic
+│   ├── file_utils.py       ← duplicate check, safe paths, directory walkers
+│   └── sorter.py           ← scan + move logic (no UI dependency)
+│
+└── ui/
+    ├── app.py           ← App class: window, canvas, tabs, language switcher
+    ├── dialogs.py       ← progress window, preview dialog, result messagebox
+    ├── media_tab.py     ← Media tab widgets
+    └── docs_tab.py      ← Documents tab widgets
 ```
 
 ---
@@ -60,13 +92,29 @@ pip install -r requirements.txt
 ## Usage
 
 ```bash
-python tri_fichier.py
+python main.py
 ```
 
-1. Click **CHOISIR UN DOSSIER** and select the folder containing your media files
-2. Click **TRIER PAR DATE** — the app will scan all files recursively
-3. Review the preview (every move is listed before anything happens)
-4. Click **Confirmer** to sort, or **Annuler** to cancel
+1. Choose a tab: **📷 Media** (sort by date) or **📄 Documents** (sort by type)
+2. Click **CHOOSE A FOLDER** and select the folder containing your files
+3. *(Media only)* Choose the output format: `Year / Month` or `Year`
+4. Click the sort button — the app scans all files recursively
+5. Review the preview (every planned move is listed)
+6. Click **Confirm** to sort, or **Cancel** to abort
+
+---
+
+## Build a standalone .exe (no Python required)
+
+Run the included build script:
+
+```bat
+build_exe.bat
+```
+
+The script installs PyInstaller, bundles all assets, and produces `dist\FileOrganizer.exe`.
+
+> **Prerequisite:** [MediaInfo](https://mediaarea.net/en/MediaInfo/Download/Windows) must still be installed separately on the target machine for video date extraction to work.
 
 ---
 

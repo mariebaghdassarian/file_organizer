@@ -6,7 +6,9 @@ import time
 import exifread
 import customtkinter as ctk
 import threading
+import tkinter as tk
 from tkinter import filedialog, messagebox
+from PIL import ImageTk
 from datetime import datetime, timedelta
 from PIL import Image
 
@@ -636,213 +638,216 @@ def organize_docs():
 # ── LANGUE ──
 # ---------------------------------------------------------------------------
 
-# Références aux widgets à mettre à jour
 _ui_refs = {}
 
 def set_language(lang):
     global current_lang
-    current_lang = lang.lower()   # "FR" → "fr", "EN" → "en"
+    current_lang = lang.lower()
     root.title(t("window_title"))
 
-    # Onglets
-    try:
-        tabview._segmented_button.configure(
-            values=[t("tab_media"), t("tab_docs")]
-        )
-    except Exception:
-        pass
+    _ui_refs["tab_media_btn"].configure(text=t("tab_media"))
+    _ui_refs["tab_docs_btn"].configure(text=t("tab_docs"))
 
-    # Labels dossiers (si aucun dossier n'est encore sélectionné)
     if not media_source:
         _ui_refs["media_folder_label"].configure(text=t("no_folder"))
     if not doc_source:
         _ui_refs["doc_folder_label"].configure(text=t("no_folder"))
 
-    # Boutons et labels médias
     _ui_refs["choose_media_btn"].configure(text=t("choose_folder"))
-    _ui_refs["format_label"].configure(text=t("sort_format_label"))
+    canvas.itemconfigure(_ui_refs["fmt_txt_id"], text=t("sort_format_label"))
     _ui_refs["format_selector"].configure(values=[t("fmt_ym"), t("fmt_y")])
     _ui_refs["format_selector"].set(t("fmt_ym") if sort_format == "year_month" else t("fmt_y"))
     _ui_refs["sort_button"].configure(
-        text=t("sort_btn_ym") if sort_format == "year_month" else t("sort_btn_y")
-    )
+        text=t("sort_btn_ym") if sort_format == "year_month" else t("sort_btn_y"))
 
-    # Boutons et labels documents
     _ui_refs["choose_doc_btn"].configure(text=t("choose_folder"))
     _ui_refs["sort_docs_btn"].configure(text=t("sort_docs_btn"))
     _ui_refs["legend_title_lbl"].configure(text=t("legend_title"))
     _ui_refs["legend_types_lbl"].configure(text=t("legend_types"))
-
-    # Quitter
     _ui_refs["quit_btn"].configure(text=t("quit"))
 
 # ---------------------------------------------------------------------------
 # ── INTERFACE ──
 # ---------------------------------------------------------------------------
 
+WIN_W, WIN_H = 520, 600
+
 ctk.set_appearance_mode("light")
 root = ctk.CTk()
 root.title(t("window_title"))
-root.geometry("520x680")
+root.geometry(f"{WIN_W}x{WIN_H}")
 root.resizable(False, False)
 root.configure(fg_color=PASTEL_BG)
 
-# Fond : image à 15% d'opacité composée sur fond pastel
+# --- Image de fond dessinée sur un Canvas tkinter ---
+# L'image est dessinée directement sur le canvas à ~30% d'opacité.
+# Les espaces entre les widgets (qui sont collés sur le canvas) montrent l'image.
+bg_photo = None
 try:
     bg_pil = Image.open(
         "C:/Users/MarieBaghdassarian/Documents/Tri_Dossier/file_icon.png"
-    ).convert("RGBA").resize((520, 680), Image.LANCZOS)
+    ).convert("RGBA").resize((WIN_W, WIN_H), Image.LANCZOS)
     r, g, b, a = bg_pil.split()
-    a = a.point(lambda x: int(x * 0.15))
+    a = a.point(lambda x: int(x * 0.30))
     bg_pil = Image.merge("RGBA", (r, g, b, a))
-    canvas_img = Image.new("RGBA", (520, 680), (254, 246, 246, 255))
-    canvas_img = Image.alpha_composite(canvas_img, bg_pil).convert("RGB")
-    bg_ctk = ctk.CTkImage(light_image=canvas_img, dark_image=canvas_img, size=(520, 680))
-    bg_lbl = ctk.CTkLabel(root, image=bg_ctk, text="")
-    bg_lbl.place(x=0, y=0, relwidth=1, relheight=1)
+    base = Image.new("RGBA", (WIN_W, WIN_H), (254, 246, 246, 255))
+    bg_photo = ImageTk.PhotoImage(Image.alpha_composite(base, bg_pil).convert("RGB"))
 except Exception:
     pass
 
-# Cadre principal transparent
-main_frame = ctk.CTkFrame(root, fg_color="transparent", corner_radius=0)
-main_frame.pack(fill="both", expand=True, padx=28, pady=12)
+canvas = tk.Canvas(root, width=WIN_W, height=WIN_H,
+                   highlightthickness=0, bg=PASTEL_BG, bd=0)
+canvas.pack(fill="both", expand=True)
+if bg_photo:
+    canvas.create_image(0, 0, anchor="nw", image=bg_photo)
 
-# Barre du haut : sélecteur de langue à droite
-top_bar = ctk.CTkFrame(main_frame, fg_color="transparent", height=30)
-top_bar.pack(fill="x", pady=(0, 4))
+# Helper : colle un widget CTk sur le canvas à une position précise
+def cw(widget, x, y, anchor="center", width=None, height=None):
+    kw = {}
+    if width:  kw["width"]  = width
+    if height: kw["height"] = height
+    return canvas.create_window(x, y, window=widget, anchor=anchor, **kw)
 
+# ---------------------------------------------------------------------------
+# Sélecteur de langue (en haut à droite)
+# ---------------------------------------------------------------------------
 lang_btn = ctk.CTkSegmentedButton(
-    top_bar,
-    values=["FR", "EN"],
-    command=set_language,
-    width=90,
-    height=26,
-    font=("Helvetica", 10, "bold"),
-    fg_color="#F5DEDE",
-    selected_color="#FF8C94",
-    selected_hover_color="#FF747D",
-    unselected_color="#F5DEDE",
-    unselected_hover_color="#F0C8C8",
-    text_color="#2C3E50",
-    corner_radius=13,
+    canvas, values=["FR", "EN"], command=set_language,
+    width=90, height=26, font=("Helvetica", 10, "bold"),
+    fg_color="#F5DEDE", selected_color="#FF8C94", selected_hover_color="#FF747D",
+    unselected_color="#F5DEDE", unselected_hover_color="#F0C8C8",
+    text_color="#2C3E50", corner_radius=13,
 )
 lang_btn.set("FR")
-lang_btn.pack(side="right")
+cw(lang_btn, WIN_W - 14, 16, anchor="ne")
 
-# Onglets
-tabview = ctk.CTkTabview(
-    main_frame,
-    fg_color="transparent",
-    segmented_button_fg_color="#F5DEDE",
-    segmented_button_selected_color="#FF8C94",
-    segmented_button_selected_hover_color="#FF747D",
-    segmented_button_unselected_hover_color="#F0C8C8",
-    text_color="#2C3E50",
-    corner_radius=15,
-    border_width=0,
-)
-tabview.pack(fill="both", expand=True)
-tabview.add(t("tab_media"))
-tabview.add(t("tab_docs"))
+# ---------------------------------------------------------------------------
+# Barre d'onglets personnalisée (deux boutons)
+# ---------------------------------------------------------------------------
+active_tab = ["media"]
 
-# Rendre les frames des onglets transparentes
-tabview.tab(t("tab_media")).configure(fg_color="transparent")
-tabview.tab(t("tab_docs")).configure(fg_color="transparent")
+def _active(btn):
+    btn.configure(fg_color="#FF8C94", hover_color="#FF747D", text_color="white")
 
-# ── Contenu onglet Médias ──
-tab_m = tabview.tab(t("tab_media"))
+def _inactive(btn):
+    btn.configure(fg_color="#F5DEDE", hover_color="#F0C8C8", text_color="#666")
 
+def switch_tab(tab):
+    active_tab[0] = tab
+    if tab == "media":
+        _active(tab_media_btn);  _inactive(tab_docs_btn)
+        for i in media_ids: canvas.itemconfigure(i, state="normal")
+        for i in docs_ids:  canvas.itemconfigure(i, state="hidden")
+    else:
+        _inactive(tab_media_btn); _active(tab_docs_btn)
+        for i in media_ids: canvas.itemconfigure(i, state="hidden")
+        for i in docs_ids:  canvas.itemconfigure(i, state="normal")
+
+tab_media_btn = ctk.CTkButton(canvas, text=t("tab_media"), width=218, height=34,
+                               font=("Helvetica", 11, "bold"), corner_radius=17,
+                               command=lambda: switch_tab("media"))
+_active(tab_media_btn)
+
+tab_docs_btn  = ctk.CTkButton(canvas, text=t("tab_docs"),  width=218, height=34,
+                               font=("Helvetica", 11, "bold"), corner_radius=17,
+                               command=lambda: switch_tab("docs"))
+_inactive(tab_docs_btn)
+
+cw(tab_media_btn, WIN_W//2 - 113, 54, anchor="center")
+cw(tab_docs_btn,  WIN_W//2 + 113, 54, anchor="center")
+
+# ---------------------------------------------------------------------------
+# Onglet MÉDIAS
+# ---------------------------------------------------------------------------
 media_folder_label = ctk.CTkLabel(
-    tab_m, text=t("no_folder"),
-    font=("Helvetica", 12, "bold"), corner_radius=10, height=34,
-    fg_color="#FADBD8", text_color="#7B4F50",
-)
-media_folder_label.pack(pady=(10, 7), fill="x")
+    canvas, text=t("no_folder"), font=("Helvetica", 12, "bold"),
+    corner_radius=10, height=34, fg_color="#FADBD8", text_color="#7B4F50")
 
 choose_media_btn = ctk.CTkButton(
-    tab_m, text=t("choose_folder"), command=select_media_folder,
+    canvas, text=t("choose_folder"), command=select_media_folder,
     fg_color="#FF8C94", hover_color="#FF747D", text_color="white",
-    font=("Helvetica", 12, "bold"), height=42, corner_radius=21,
-)
-choose_media_btn.pack(pady=5, fill="x")
+    font=("Helvetica", 12, "bold"), height=42, corner_radius=21)
 
-format_label = ctk.CTkLabel(tab_m, text=t("sort_format_label"),
-                             font=("Helvetica", 11), fg_color="transparent", text_color="#555")
-format_label.pack(pady=(10, 2))
+# Texte "Format de tri" dessiné directement sur le canvas → transparent sur l'image
+fmt_txt_id = canvas.create_text(WIN_W//2, 203, text=t("sort_format_label"),
+                                 font=("Helvetica", 11), fill="#555555", anchor="center")
 
 format_selector = ctk.CTkSegmentedButton(
-    tab_m,
-    values=[t("fmt_ym"), t("fmt_y")],
-    command=on_format_change,
-    font=("Helvetica", 11, "bold"),
-    fg_color="#F0E0E0",
-    selected_color="#A8E6CF",
-    selected_hover_color="#89D9BB",
-    unselected_color="#F0E0E0",
-    unselected_hover_color="#E0D0D0",
-    text_color="#2C3E50",
-    height=32,
-    corner_radius=16,
-)
+    canvas, values=[t("fmt_ym"), t("fmt_y")], command=on_format_change,
+    font=("Helvetica", 11, "bold"), fg_color="#F0E0E0",
+    selected_color="#A8E6CF", selected_hover_color="#89D9BB",
+    unselected_color="#F0E0E0", unselected_hover_color="#E0D0D0",
+    text_color="#2C3E50", height=32, corner_radius=16)
 format_selector.set(t("fmt_ym"))
-format_selector.pack(pady=(0, 5), fill="x")
 
 sort_button = ctk.CTkButton(
-    tab_m, text=t("sort_btn_ym"), command=organize_media,
+    canvas, text=t("sort_btn_ym"), command=organize_media,
     fg_color="#A8E6CF", hover_color="#89D9BB", text_color="#2C3E50",
-    font=("Helvetica", 12, "bold"), height=42, corner_radius=21,
-)
-sort_button.pack(pady=5, fill="x")
+    font=("Helvetica", 12, "bold"), height=42, corner_radius=21)
 
-# ── Contenu onglet Documents ──
-tab_d = tabview.tab(t("tab_docs"))
+m1 = cw(media_folder_label, WIN_W//2, 105, anchor="center", width=462)
+m2 = cw(choose_media_btn,   WIN_W//2, 155, anchor="center", width=462)
+m3 = fmt_txt_id
+m4 = cw(format_selector,    WIN_W//2, 232, anchor="center", width=462)
+m5 = cw(sort_button,        WIN_W//2, 280, anchor="center", width=462)
+media_ids = [m1, m2, m3, m4, m5]
 
+# ---------------------------------------------------------------------------
+# Onglet DOCUMENTS
+# ---------------------------------------------------------------------------
 doc_folder_label = ctk.CTkLabel(
-    tab_d, text=t("no_folder"),
-    font=("Helvetica", 12, "bold"), corner_radius=10, height=34,
-    fg_color="#D6EAF8", text_color="#1A5276",
-)
-doc_folder_label.pack(pady=(10, 7), fill="x")
+    canvas, text=t("no_folder"), font=("Helvetica", 12, "bold"),
+    corner_radius=10, height=34, fg_color="#D6EAF8", text_color="#1A5276")
 
 choose_doc_btn = ctk.CTkButton(
-    tab_d, text=t("choose_folder"), command=select_doc_folder,
+    canvas, text=t("choose_folder"), command=select_doc_folder,
     fg_color="#85C1E9", hover_color="#5DADE2", text_color="white",
-    font=("Helvetica", 12, "bold"), height=42, corner_radius=21,
-)
-choose_doc_btn.pack(pady=5, fill="x")
+    font=("Helvetica", 12, "bold"), height=42, corner_radius=21)
 
 sort_docs_btn = ctk.CTkButton(
-    tab_d, text=t("sort_docs_btn"), command=organize_docs,
+    canvas, text=t("sort_docs_btn"), command=organize_docs,
     fg_color="#A9CCE3", hover_color="#7FB3D3", text_color="#1A3D5C",
-    font=("Helvetica", 12, "bold"), height=42, corner_radius=21,
-)
-sort_docs_btn.pack(pady=5, fill="x")
+    font=("Helvetica", 12, "bold"), height=42, corner_radius=21)
 
-legend_frame = ctk.CTkFrame(tab_d, fg_color="#EBF5FB", corner_radius=10)
-legend_frame.pack(pady=(10, 5), fill="x")
+legend_frame = ctk.CTkFrame(canvas, fg_color="#EBF5FB", corner_radius=10)
 legend_title_lbl = ctk.CTkLabel(legend_frame, text=t("legend_title"),
                                  font=("Helvetica", 10, "bold"), fg_color="transparent",
                                  text_color="#1A5276")
 legend_title_lbl.pack(pady=(6, 2))
 legend_types_lbl = ctk.CTkLabel(legend_frame, text=t("legend_types"),
                                  font=("Helvetica", 10), fg_color="transparent",
-                                 text_color="#555", wraplength=380)
+                                 text_color="#555", wraplength=400)
 legend_types_lbl.pack(pady=(0, 8))
 
-# Bouton quitter
-quit_btn = ctk.CTkButton(
-    main_frame, text=t("quit"), command=root.quit,
-    fg_color="#BDC3C7", hover_color="#A0A6A8", text_color="#2C3E50",
-    font=("Helvetica", 11, "bold"), height=34, corner_radius=17,
-)
-quit_btn.pack(pady=(8, 2))
+d1 = cw(doc_folder_label, WIN_W//2, 105, anchor="center", width=462)
+d2 = cw(choose_doc_btn,   WIN_W//2, 155, anchor="center", width=462)
+d3 = cw(sort_docs_btn,    WIN_W//2, 207, anchor="center", width=462)
+d4 = cw(legend_frame,     WIN_W//2, 272, anchor="center", width=462)
+docs_ids = [d1, d2, d3, d4]
 
-# Enregistrement des références pour la mise à jour i18n
+# Démarrer sur l'onglet Médias
+for i in docs_ids:
+    canvas.itemconfigure(i, state="hidden")
+
+# ---------------------------------------------------------------------------
+# Bouton Quitter
+# ---------------------------------------------------------------------------
+quit_btn = ctk.CTkButton(
+    canvas, text=t("quit"), command=root.quit,
+    fg_color="#BDC3C7", hover_color="#A0A6A8", text_color="#2C3E50",
+    font=("Helvetica", 11, "bold"), height=34, corner_radius=17)
+cw(quit_btn, WIN_W//2, 555, anchor="center", width=180)
+
+# ---------------------------------------------------------------------------
+# Enregistrement des refs i18n
+# ---------------------------------------------------------------------------
 _ui_refs.update({
+    "tab_media_btn":      tab_media_btn,
+    "tab_docs_btn":       tab_docs_btn,
     "media_folder_label": media_folder_label,
     "doc_folder_label":   doc_folder_label,
     "choose_media_btn":   choose_media_btn,
-    "format_label":       format_label,
+    "fmt_txt_id":         fmt_txt_id,
     "format_selector":    format_selector,
     "sort_button":        sort_button,
     "choose_doc_btn":     choose_doc_btn,
