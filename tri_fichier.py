@@ -26,15 +26,109 @@ VIDEO_EXTENSIONS = {
 ALL_MEDIA = IMAGE_EXTENSIONS | VIDEO_EXTENSIONS
 
 DOC_TYPE_MAP = {
-    "PDF":          {".pdf"},
-    "Word":         {".doc", ".docx", ".odt"},
-    "Excel":        {".xls", ".xlsx", ".ods", ".csv"},
-    "PowerPoint":   {".ppt", ".pptx", ".odp"},
-    "Texte":        {".txt", ".md", ".rtf"},
-    "Archives":     {".zip", ".rar", ".7z", ".tar", ".gz", ".bz2"},
-    "Code":         {".py", ".js", ".ts", ".html", ".css", ".java", ".cpp", ".c", ".json", ".xml"},
+    "PDF":        {".pdf"},
+    "Word":       {".doc", ".docx", ".odt"},
+    "Excel":      {".xls", ".xlsx", ".ods", ".csv"},
+    "PowerPoint": {".ppt", ".pptx", ".odp"},
+    "Texte":      {".txt", ".md", ".rtf"},
+    "Archives":   {".zip", ".rar", ".7z", ".tar", ".gz", ".bz2"},
+    "Code":       {".py", ".js", ".ts", ".html", ".css", ".java", ".cpp", ".c", ".json", ".xml"},
 }
 EXT_TO_DOC_TYPE = {ext: t for t, exts in DOC_TYPE_MAP.items() for ext in exts}
+
+# ---------------------------------------------------------------------------
+# Traductions
+# ---------------------------------------------------------------------------
+TRANSLATIONS = {
+    "fr": {
+        "window_title":       "Organisateur de Fichiers",
+        "tab_media":          "📷  Médias",
+        "tab_docs":           "📄  Documents",
+        "no_folder":          "📁  Aucun dossier sélectionné",
+        "choose_folder":      "CHOISIR UN DOSSIER",
+        "sort_format_label":  "Format de tri",
+        "fmt_ym":             "Année / Mois",
+        "fmt_y":              "Année",
+        "sort_btn_ym":        "TRIER PAR DATE  (YYYY / YYYY-MM)",
+        "sort_btn_y":         "TRIER PAR DATE  (YYYY)",
+        "sort_docs_btn":      "TRIER PAR TYPE DE FICHIER",
+        "legend_title":       "Dossiers créés automatiquement :",
+        "legend_types":       "PDF · Word · Excel · PowerPoint · Texte · Archives · Code · Autres",
+        "quit":               "Quitter",
+        # Fenêtres de progression
+        "scanning":           "Analyse des fichiers…",
+        "moving_media":       "Déplacement des fichiers…",
+        "moving_docs":        "Déplacement des documents…",
+        "collecting":         "Collecte en cours…",
+        "lbl_elapsed":        "⏱  Écoulé : {t}",
+        "lbl_remaining":      "⏳  Restant : {t}",
+        # Messages
+        "warn_no_folder":     "Veuillez d'abord choisir un dossier.",
+        "no_media_found":     "Aucun fichier média trouvé dans ce dossier.",
+        "no_docs_found":      "Aucun document trouvé dans ce dossier.",
+        "all_sorted_title":   "Tout est trié !",
+        "all_sorted_media":   "{n} fichier(s) analysé(s) — tout est déjà correctement classé. 🎉",
+        "all_sorted_docs":    "Aucun document à déplacer. {n} déjà bien classé(s).",
+        "preview_media":      "Aperçu — {n} déplacement(s)",
+        "preview_docs":       "Tri par type — {n} fichier(s)",
+        "n_to_move":          "{n} fichier(s) à déplacer",
+        "confirm":            "✅  Confirmer et trier",
+        "cancel_btn":         "❌  Annuler",
+        "result_title":       "Résultat",
+        "result_ok":          "✅ Tri terminé !\n{n} fichier(s) déplacé(s).",
+        "result_errors":      "\n⚠️ {e} erreur(s) — ces fichiers n'ont pas pu être déplacés.",
+        "sum_already_ok":     "✅ {n} fichier(s) déjà bien classé(s) — ignorés",
+        "sum_duplicates":     "🔁 {n} doublon(s) identique(s) — ignorés",
+        "sum_ok_docs":        "✅ {n} fichier(s) déjà dans le bon dossier — ignorés",
+        "manual_folder":      "_A_TRIER_MANUELLEMENT",
+    },
+    "en": {
+        "window_title":       "File Organizer",
+        "tab_media":          "📷  Media",
+        "tab_docs":           "📄  Documents",
+        "no_folder":          "📁  No folder selected",
+        "choose_folder":      "CHOOSE A FOLDER",
+        "sort_format_label":  "Sort format",
+        "fmt_ym":             "Year / Month",
+        "fmt_y":              "Year",
+        "sort_btn_ym":        "SORT BY DATE  (YYYY / YYYY-MM)",
+        "sort_btn_y":         "SORT BY DATE  (YYYY)",
+        "sort_docs_btn":      "SORT BY FILE TYPE",
+        "legend_title":       "Folders created automatically:",
+        "legend_types":       "PDF · Word · Excel · PowerPoint · Text · Archives · Code · Others",
+        "quit":               "Quit",
+        "scanning":           "Scanning files…",
+        "moving_media":       "Moving files…",
+        "moving_docs":        "Moving documents…",
+        "collecting":         "Collecting files…",
+        "lbl_elapsed":        "⏱  Elapsed: {t}",
+        "lbl_remaining":      "⏳  Remaining: {t}",
+        "warn_no_folder":     "Please choose a folder first.",
+        "no_media_found":     "No media files found in this folder.",
+        "no_docs_found":      "No documents found in this folder.",
+        "all_sorted_title":   "All sorted!",
+        "all_sorted_media":   "{n} file(s) analyzed — everything is already correctly sorted. 🎉",
+        "all_sorted_docs":    "Nothing to move. {n} file(s) already in the right folder.",
+        "preview_media":      "Preview — {n} move(s)",
+        "preview_docs":       "Sort by type — {n} file(s)",
+        "n_to_move":          "{n} file(s) to move",
+        "confirm":            "✅  Confirm and sort",
+        "cancel_btn":         "❌  Cancel",
+        "result_title":       "Result",
+        "result_ok":          "✅ Done!\n{n} file(s) moved.",
+        "result_errors":      "\n⚠️ {e} error(s) — these files could not be moved.",
+        "sum_already_ok":     "✅ {n} file(s) already correctly sorted — skipped",
+        "sum_duplicates":     "🔁 {n} identical duplicate(s) — skipped",
+        "sum_ok_docs":        "✅ {n} file(s) already in the right folder — skipped",
+        "manual_folder":      "_TO_SORT_MANUALLY",
+    },
+}
+
+current_lang = "fr"
+
+def t(key, **kwargs):
+    s = TRANSLATIONS[current_lang].get(key, key)
+    return s.format(**kwargs) if kwargs else s
 
 # ---------------------------------------------------------------------------
 # Global state
@@ -77,7 +171,8 @@ def get_video_date(file_path):
         for track in info.tracks:
             if track.track_type != "General":
                 continue
-            for field in (track.com_apple_quicktime_creationdate, track.encoded_date, track.tagged_date):
+            for field in (track.com_apple_quicktime_creationdate,
+                          track.encoded_date, track.tagged_date):
                 if not field:
                     continue
                 m = re.search(r"(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}:\d{2})", field)
@@ -202,11 +297,11 @@ def remove_empty_dirs(folder):
             pass
 
 # ---------------------------------------------------------------------------
-# Time formatting
+# Time helper
 # ---------------------------------------------------------------------------
 
 def fmt_time(seconds):
-    s = int(seconds)
+    s = int(max(0, seconds))
     h, rem = divmod(s, 3600)
     m, sec = divmod(rem, 60)
     if h > 0:
@@ -220,56 +315,49 @@ def fmt_time(seconds):
 # Progress window
 # ---------------------------------------------------------------------------
 
-def make_progress_win(title, subtitle=""):
+def make_progress_win(title_key):
     win = ctk.CTkToplevel(root)
-    win.title(title)
-    win.geometry("500x290")
+    win.title(t(title_key))
+    win.geometry("500x285")
     win.grab_set()
     win.resizable(False, False)
     win.configure(fg_color=PASTEL_BG)
 
     start_time = [time.time()]
 
-    ctk.CTkLabel(win, text=title, font=("Helvetica", 14, "bold"),
-                 fg_color="transparent", bg_color="transparent").pack(pady=(18, 2))
-    if subtitle:
-        ctk.CTkLabel(win, text=subtitle, font=("Helvetica", 11), text_color="#888888",
-                     fg_color="transparent").pack(pady=(0, 4))
-
-    lbl_file = ctk.CTkLabel(win, text="", font=("Helvetica", 10), text_color="#777777",
+    ctk.CTkLabel(win, text=t(title_key), font=("Helvetica", 14, "bold"),
+                 fg_color="transparent").pack(pady=(18, 2))
+    lbl_file = ctk.CTkLabel(win, text="", font=("Helvetica", 10), text_color="#777",
                              fg_color="transparent")
     lbl_file.pack(pady=2)
-
     lbl_count = ctk.CTkLabel(win, text="— / —", font=("Helvetica", 13, "bold"),
                               fg_color="transparent")
     lbl_count.pack(pady=2)
-
     bar = ctk.CTkProgressBar(win, width=440, progress_color="#A8E6CF",
                               fg_color="#E0E0E0", height=10)
     bar.set(0)
     bar.pack(pady=10)
-
     frm_t = ctk.CTkFrame(win, fg_color="transparent")
     frm_t.pack(pady=2)
-    lbl_el = ctk.CTkLabel(frm_t, text="⏱  Écoulé : 0s", font=("Helvetica", 11),
-                           fg_color="transparent", text_color="#555")
-    lbl_el.pack(side="left", padx=25)
-    lbl_rm = ctk.CTkLabel(frm_t, text="⏳  Restant : —", font=("Helvetica", 11),
-                           fg_color="transparent", text_color="#555")
-    lbl_rm.pack(side="left", padx=25)
+    lbl_el = ctk.CTkLabel(frm_t, text=t("lbl_elapsed", t="0s"),
+                           font=("Helvetica", 11), fg_color="transparent", text_color="#555")
+    lbl_el.pack(side="left", padx=22)
+    lbl_rm = ctk.CTkLabel(frm_t, text=t("lbl_remaining", t="—"),
+                           font=("Helvetica", 11), fg_color="transparent", text_color="#555")
+    lbl_rm.pack(side="left", padx=22)
 
     def update(i, total, filename=""):
         if total == 0:
             return
         elapsed = time.time() - start_time[0]
-        short = (filename[:44] + "…") if len(filename) > 46 else filename
-        remaining_str = f"~{fmt_time(elapsed / i * total - elapsed)}" if i > 0 else "—"
+        short   = (filename[:44] + "…") if len(filename) > 46 else filename
+        rem_str = f"~{fmt_time(elapsed / i * total - elapsed)}" if i > 0 else "—"
         root.after(0, lambda: [
             lbl_file.configure(text=short),
             lbl_count.configure(text=f"{i} / {total}"),
             bar.set(i / total),
-            lbl_el.configure(text=f"⏱  Écoulé : {fmt_time(elapsed)}"),
-            lbl_rm.configure(text=f"⏳  Restant : {remaining_str}"),
+            lbl_el.configure(text=t("lbl_elapsed", t=fmt_time(elapsed))),
+            lbl_rm.configure(text=t("lbl_remaining", t=rem_str)),
         ])
 
     return win, update
@@ -285,7 +373,7 @@ def show_preview(title, lines, n_to_move):
     win.grab_set()
     win.configure(fg_color=PASTEL_BG)
 
-    ctk.CTkLabel(win, text=f"{n_to_move} fichier(s) à déplacer",
+    ctk.CTkLabel(win, text=t("n_to_move", n=n_to_move),
                  font=("Helvetica", 14, "bold"), fg_color="transparent").pack(pady=10)
 
     text_area = ctk.CTkTextbox(win, wrap="none", font=("Consolas", 10),
@@ -302,10 +390,10 @@ def show_preview(title, lines, n_to_move):
 
     frm = ctk.CTkFrame(win, fg_color="transparent")
     frm.pack(pady=15, fill="x")
-    ctk.CTkButton(frm, text="✅  Confirmer et trier", command=on_confirm,
+    ctk.CTkButton(frm, text=t("confirm"), command=on_confirm,
                   fg_color="#2ECC71", hover_color="#27AE60",
                   font=("Helvetica", 12, "bold"), corner_radius=15).pack(side="left", expand=True, padx=12)
-    ctk.CTkButton(frm, text="❌  Annuler", command=win.destroy,
+    ctk.CTkButton(frm, text=t("cancel_btn"), command=win.destroy,
                   fg_color="#E74C3C", hover_color="#C0392B",
                   font=("Helvetica", 12, "bold"), corner_radius=15).pack(side="right", expand=True, padx=12)
 
@@ -313,13 +401,13 @@ def show_preview(title, lines, n_to_move):
     return result["confirm"]
 
 # ---------------------------------------------------------------------------
-# Generic mover (runs in thread)
+# Generic mover (thread)
 # ---------------------------------------------------------------------------
 
-def run_moves(files_data, win_title, cleanup_folder, on_complete):
-    win, update = make_progress_win(win_title)
-    total = len(files_data)
-    moved = 0
+def run_moves(files_data, title_key, cleanup_folder, on_complete):
+    win, update = make_progress_win(title_key)
+    total  = len(files_data)
+    moved  = 0
     errors = 0
     for i, (src, dest_dir, fname) in enumerate(files_data, 1):
         update(i, total, fname)
@@ -335,10 +423,10 @@ def run_moves(files_data, win_title, cleanup_folder, on_complete):
 
 
 def show_done(moved, errors):
-    msg = f"✅ Tri terminé !\n{moved} fichier(s) déplacé(s)."
+    msg = t("result_ok", n=moved)
     if errors:
-        msg += f"\n⚠️ {errors} erreur(s) — ces fichiers n'ont pas pu être déplacés."
-    messagebox.showinfo("Résultat", msg)
+        msg += t("result_errors", e=errors)
+    messagebox.showinfo(t("result_title"), msg)
 
 # ---------------------------------------------------------------------------
 # ── ONGLET MÉDIAS ──
@@ -357,45 +445,43 @@ def select_media_folder():
 
 def on_format_change(value):
     global sort_format
-    sort_format = "year" if value == "Année" else "year_month"
-    lbl = "TRIER PAR DATE  (YYYY)" if sort_format == "year" else "TRIER PAR DATE  (YYYY / YYYY-MM)"
-    sort_button.configure(text=lbl)
+    sort_format = "year" if value == t("fmt_y") else "year_month"
+    sort_button.configure(text=t("sort_btn_ym") if sort_format == "year_month" else t("sort_btn_y"))
 
 
 def organize_media():
     if not media_source:
-        messagebox.showwarning("Attention", "Veuillez d'abord choisir un dossier.")
+        messagebox.showwarning("", t("warn_no_folder"))
         return
 
-    # Scan window
     scan_win = ctk.CTkToplevel(root)
-    scan_win.title("Analyse des fichiers…")
-    scan_win.geometry("500x290")
+    scan_win.title(t("scanning"))
+    scan_win.geometry("500x285")
     scan_win.grab_set()
     scan_win.resizable(False, False)
     scan_win.configure(fg_color=PASTEL_BG)
     scan_start = [time.time()]
 
-    ctk.CTkLabel(scan_win, text="Analyse des fichiers…",
-                 font=("Helvetica", 14, "bold"), fg_color="transparent").pack(pady=(18, 2))
-    lbl_file  = ctk.CTkLabel(scan_win, text="Collecte en cours…", font=("Helvetica", 10),
-                              text_color="#777777", fg_color="transparent")
+    ctk.CTkLabel(scan_win, text=t("scanning"), font=("Helvetica", 14, "bold"),
+                 fg_color="transparent").pack(pady=(18, 2))
+    lbl_file  = ctk.CTkLabel(scan_win, text=t("collecting"), font=("Helvetica", 10),
+                              text_color="#777", fg_color="transparent")
     lbl_file.pack(pady=2)
     lbl_count = ctk.CTkLabel(scan_win, text="— / —", font=("Helvetica", 13, "bold"),
                               fg_color="transparent")
     lbl_count.pack(pady=2)
-    scan_bar = ctk.CTkProgressBar(scan_win, width=440, progress_color="#A8E6CF",
-                                   fg_color="#E0E0E0", height=10)
+    scan_bar  = ctk.CTkProgressBar(scan_win, width=440, progress_color="#A8E6CF",
+                                    fg_color="#E0E0E0", height=10)
     scan_bar.set(0)
     scan_bar.pack(pady=10)
     frm_t = ctk.CTkFrame(scan_win, fg_color="transparent")
     frm_t.pack(pady=2)
-    lbl_el = ctk.CTkLabel(frm_t, text="⏱  Écoulé : 0s", font=("Helvetica", 11),
-                           fg_color="transparent", text_color="#555")
-    lbl_el.pack(side="left", padx=25)
-    lbl_rm = ctk.CTkLabel(frm_t, text="⏳  Restant : —", font=("Helvetica", 11),
-                           fg_color="transparent", text_color="#555")
-    lbl_rm.pack(side="left", padx=25)
+    lbl_el = ctk.CTkLabel(frm_t, text=t("lbl_elapsed", t="0s"),
+                           font=("Helvetica", 11), fg_color="transparent", text_color="#555")
+    lbl_el.pack(side="left", padx=22)
+    lbl_rm = ctk.CTkLabel(frm_t, text=t("lbl_remaining", t="—"),
+                           font=("Helvetica", 11), fg_color="transparent", text_color="#555")
+    lbl_rm.pack(side="left", padx=22)
 
     def scan_task():
         all_files = collect_all_media(media_source)
@@ -404,16 +490,16 @@ def organize_media():
         if total == 0:
             root.after(0, lambda: [
                 scan_win.destroy(),
-                messagebox.showinfo("Info", "Aucun fichier média trouvé dans ce dossier."),
+                messagebox.showinfo("", t("no_media_found")),
             ])
             return
 
         root.after(0, lambda: lbl_count.configure(text=f"0 / {total}"))
 
-        to_move      = []
+        to_move       = []
         preview_lines = []
-        already_ok   = 0
-        duplicates   = 0
+        already_ok    = 0
+        duplicates    = 0
 
         for i, path in enumerate(all_files, 1):
             fname   = os.path.basename(path)
@@ -426,8 +512,8 @@ def organize_media():
                 lbl_file.configure(text=s),
                 lbl_count.configure(text=c),
                 scan_bar.set(p),
-                lbl_el.configure(text=f"⏱  Écoulé : {e}"),
-                lbl_rm.configure(text=f"⏳  Restant : {r}"),
+                lbl_el.configure(text=t("lbl_elapsed", t=e)),
+                lbl_rm.configure(text=t("lbl_remaining", t=r)),
             ])
 
             date = get_reliable_date(path)
@@ -445,24 +531,24 @@ def organize_media():
                 if os.path.normpath(path) == os.path.normpath(dest_path):
                     already_ok += 1
                     continue
-
                 if os.path.exists(dest_path) and files_are_identical(path, dest_path):
                     duplicates += 1
-                    preview_lines.append(f"[DOUBLON ignoré]  {os.path.relpath(path, media_source)}")
+                    preview_lines.append(f"[skip dup]  {os.path.relpath(path, media_source)}")
                     continue
 
                 rel_src = os.path.relpath(path, media_source)
                 preview_lines.append(f"{rel_src[:50].ljust(52)} →  {rel_dst}")
                 to_move.append((path, dest_dir, fname))
             else:
-                dest_dir = os.path.join(media_source, "_A_TRIER_MANUELLEMENT")
-                rel_src  = os.path.relpath(path, media_source)
-                preview_lines.append(f"{rel_src[:50].ljust(52)} →  _A_TRIER_MANUELLEMENT/{fname}")
-                to_move.append((path, dest_dir, fname))
+                manual_dir = os.path.join(media_source, t("manual_folder"))
+                rel_src = os.path.relpath(path, media_source)
+                preview_lines.append(
+                    f"{rel_src[:50].ljust(52)} →  {t('manual_folder')}/{fname}")
+                to_move.append((path, manual_dir, fname))
 
         summary = []
-        if already_ok:  summary.append(f"✅ {already_ok} fichier(s) déjà bien classé(s) — ignorés")
-        if duplicates:  summary.append(f"🔁 {duplicates} doublon(s) identique(s) — ignorés")
+        if already_ok:  summary.append(t("sum_already_ok", n=already_ok))
+        if duplicates:  summary.append(t("sum_duplicates", n=duplicates))
         if summary:     preview_lines = summary + ["─" * 72] + preview_lines
 
         root.after(0, lambda: _finalize_media(scan_win, to_move, preview_lines, total))
@@ -473,13 +559,12 @@ def organize_media():
 def _finalize_media(scan_win, to_move, preview_lines, total_found):
     scan_win.destroy()
     if not to_move:
-        messagebox.showinfo("Tout est trié !",
-                            f"{total_found} fichier(s) analysé(s) — tout est déjà correctement classé. 🎉")
+        messagebox.showinfo(t("all_sorted_title"), t("all_sorted_media", n=total_found))
         return
-    if show_preview(f"Aperçu — {len(to_move)} déplacement(s)", preview_lines, len(to_move)):
+    if show_preview(t("preview_media", n=len(to_move)), preview_lines, len(to_move)):
         threading.Thread(
             target=run_moves,
-            args=(to_move, "Déplacement des fichiers…", media_source, show_done),
+            args=(to_move, "moving_media", media_source, show_done),
             daemon=True,
         ).start()
 
@@ -500,12 +585,12 @@ def select_doc_folder():
 
 def organize_docs():
     if not doc_source:
-        messagebox.showwarning("Attention", "Veuillez d'abord choisir un dossier.")
+        messagebox.showwarning("", t("warn_no_folder"))
         return
 
     all_docs = collect_all_docs(doc_source)
     if not all_docs:
-        messagebox.showinfo("Info", "Aucun document trouvé dans ce dossier.")
+        messagebox.showinfo("", t("no_docs_found"))
         return
 
     to_move       = []
@@ -514,16 +599,15 @@ def organize_docs():
     duplicates    = 0
 
     for path in all_docs:
-        fname    = os.path.basename(path)
-        ext      = os.path.splitext(fname)[1].lower()
-        dtype    = EXT_TO_DOC_TYPE.get(ext, "Autres")
-        dest_dir = os.path.join(doc_source, dtype)
+        fname     = os.path.basename(path)
+        ext       = os.path.splitext(fname)[1].lower()
+        dtype     = EXT_TO_DOC_TYPE.get(ext, "Autres" if current_lang == "fr" else "Others")
+        dest_dir  = os.path.join(doc_source, dtype)
         dest_path = os.path.join(dest_dir, fname)
 
         if os.path.normpath(os.path.dirname(path)) == os.path.normpath(dest_dir):
             already_ok += 1
             continue
-
         if os.path.exists(dest_path) and files_are_identical(path, dest_path):
             duplicates += 1
             continue
@@ -533,21 +617,64 @@ def organize_docs():
         to_move.append((path, dest_dir, fname))
 
     summary = []
-    if already_ok: summary.append(f"✅ {already_ok} fichier(s) déjà dans le bon dossier — ignorés")
-    if duplicates: summary.append(f"🔁 {duplicates} doublon(s) — ignorés")
+    if already_ok: summary.append(t("sum_ok_docs", n=already_ok))
+    if duplicates: summary.append(t("sum_duplicates", n=duplicates))
     if summary:    preview_lines = summary + ["─" * 72] + preview_lines
 
     if not to_move:
-        messagebox.showinfo("Tout est trié !",
-                            f"Aucun document à déplacer. {already_ok} fichier(s) déjà bien classé(s).")
+        messagebox.showinfo(t("all_sorted_title"), t("all_sorted_docs", n=already_ok))
         return
 
-    if show_preview(f"Tri par type — {len(to_move)} fichier(s)", preview_lines, len(to_move)):
+    if show_preview(t("preview_docs", n=len(to_move)), preview_lines, len(to_move)):
         threading.Thread(
             target=run_moves,
-            args=(to_move, "Déplacement des documents…", doc_source, show_done),
+            args=(to_move, "moving_docs", doc_source, show_done),
             daemon=True,
         ).start()
+
+# ---------------------------------------------------------------------------
+# ── LANGUE ──
+# ---------------------------------------------------------------------------
+
+# Références aux widgets à mettre à jour
+_ui_refs = {}
+
+def set_language(lang):
+    global current_lang
+    current_lang = lang
+    root.title(t("window_title"))
+
+    # Onglets
+    try:
+        tabview._segmented_button.configure(
+            values=[t("tab_media"), t("tab_docs")]
+        )
+    except Exception:
+        pass
+
+    # Labels dossiers (si aucun dossier n'est encore sélectionné)
+    if not media_source:
+        _ui_refs["media_folder_label"].configure(text=t("no_folder"))
+    if not doc_source:
+        _ui_refs["doc_folder_label"].configure(text=t("no_folder"))
+
+    # Boutons et labels médias
+    _ui_refs["choose_media_btn"].configure(text=t("choose_folder"))
+    _ui_refs["format_label"].configure(text=t("sort_format_label"))
+    _ui_refs["format_selector"].configure(values=[t("fmt_ym"), t("fmt_y")])
+    _ui_refs["format_selector"].set(t("fmt_ym") if sort_format == "year_month" else t("fmt_y"))
+    _ui_refs["sort_button"].configure(
+        text=t("sort_btn_ym") if sort_format == "year_month" else t("sort_btn_y")
+    )
+
+    # Boutons et labels documents
+    _ui_refs["choose_doc_btn"].configure(text=t("choose_folder"))
+    _ui_refs["sort_docs_btn"].configure(text=t("sort_docs_btn"))
+    _ui_refs["legend_title_lbl"].configure(text=t("legend_title"))
+    _ui_refs["legend_types_lbl"].configure(text=t("legend_types"))
+
+    # Quitter
+    _ui_refs["quit_btn"].configure(text=t("quit"))
 
 # ---------------------------------------------------------------------------
 # ── INTERFACE ──
@@ -555,32 +682,54 @@ def organize_docs():
 
 ctk.set_appearance_mode("light")
 root = ctk.CTk()
-root.title("Organisateur de Fichiers")
-root.geometry("520x710")
+root.title(t("window_title"))
+root.geometry("520x680")
 root.resizable(False, False)
 root.configure(fg_color=PASTEL_BG)
 
-# --- Fond : image à très faible opacité, composée sur fond pastel ---
+# Fond : image à 15% d'opacité composée sur fond pastel
 try:
     bg_pil = Image.open(
         "C:/Users/MarieBaghdassarian/Documents/Tri_Dossier/file_icon.png"
-    ).convert("RGBA").resize((520, 710), Image.LANCZOS)
+    ).convert("RGBA").resize((520, 680), Image.LANCZOS)
     r, g, b, a = bg_pil.split()
-    a = a.point(lambda x: int(x * 0.15))           # 15 % d'opacité
+    a = a.point(lambda x: int(x * 0.15))
     bg_pil = Image.merge("RGBA", (r, g, b, a))
-    canvas_img = Image.new("RGBA", (520, 710), (254, 246, 246, 255))
+    canvas_img = Image.new("RGBA", (520, 680), (254, 246, 246, 255))
     canvas_img = Image.alpha_composite(canvas_img, bg_pil).convert("RGB")
-    bg_ctk = ctk.CTkImage(light_image=canvas_img, dark_image=canvas_img, size=(520, 710))
+    bg_ctk = ctk.CTkImage(light_image=canvas_img, dark_image=canvas_img, size=(520, 680))
     bg_lbl = ctk.CTkLabel(root, image=bg_ctk, text="")
     bg_lbl.place(x=0, y=0, relwidth=1, relheight=1)
 except Exception:
     pass
 
-# --- Cadre principal transparent ---
+# Cadre principal transparent
 main_frame = ctk.CTkFrame(root, fg_color="transparent", corner_radius=0)
-main_frame.pack(fill="both", expand=True, padx=30, pady=15)
+main_frame.pack(fill="both", expand=True, padx=28, pady=12)
 
-# --- Onglets ---
+# Barre du haut : sélecteur de langue à droite
+top_bar = ctk.CTkFrame(main_frame, fg_color="transparent", height=30)
+top_bar.pack(fill="x", pady=(0, 4))
+
+lang_btn = ctk.CTkSegmentedButton(
+    top_bar,
+    values=["FR", "EN"],
+    command=set_language,
+    width=90,
+    height=26,
+    font=("Helvetica", 10, "bold"),
+    fg_color="#F5DEDE",
+    selected_color="#FF8C94",
+    selected_hover_color="#FF747D",
+    unselected_color="#F5DEDE",
+    unselected_hover_color="#F0C8C8",
+    text_color="#2C3E50",
+    corner_radius=13,
+)
+lang_btn.set("FR")
+lang_btn.pack(side="right")
+
+# Onglets
 tabview = ctk.CTkTabview(
     main_frame,
     fg_color="transparent",
@@ -589,36 +738,41 @@ tabview = ctk.CTkTabview(
     segmented_button_selected_hover_color="#FF747D",
     segmented_button_unselected_hover_color="#F0C8C8",
     text_color="#2C3E50",
-    text_color_disabled="#888888",
     corner_radius=15,
     border_width=0,
 )
 tabview.pack(fill="both", expand=True)
-tabview.add("📷  Médias")
-tabview.add("📄  Documents")
+tabview.add(t("tab_media"))
+tabview.add(t("tab_docs"))
+
+# Rendre les frames des onglets transparentes
+tabview.tab(t("tab_media")).configure(fg_color="transparent")
+tabview.tab(t("tab_docs")).configure(fg_color="transparent")
 
 # ── Contenu onglet Médias ──
-tab_media = tabview.tab("📷  Médias")
+tab_m = tabview.tab(t("tab_media"))
 
 media_folder_label = ctk.CTkLabel(
-    tab_media, text="📁  Aucun dossier sélectionné",
+    tab_m, text=t("no_folder"),
     font=("Helvetica", 12, "bold"), corner_radius=10, height=34,
     fg_color="#FADBD8", text_color="#7B4F50",
 )
-media_folder_label.pack(pady=(12, 8), fill="x")
+media_folder_label.pack(pady=(10, 7), fill="x")
 
-ctk.CTkButton(
-    tab_media, text="CHOISIR UN DOSSIER", command=select_media_folder,
+choose_media_btn = ctk.CTkButton(
+    tab_m, text=t("choose_folder"), command=select_media_folder,
     fg_color="#FF8C94", hover_color="#FF747D", text_color="white",
     font=("Helvetica", 12, "bold"), height=42, corner_radius=21,
-).pack(pady=5, fill="x")
+)
+choose_media_btn.pack(pady=5, fill="x")
 
-ctk.CTkLabel(tab_media, text="Format de tri", font=("Helvetica", 11),
-             fg_color="transparent", text_color="#555").pack(pady=(10, 2))
+format_label = ctk.CTkLabel(tab_m, text=t("sort_format_label"),
+                             font=("Helvetica", 11), fg_color="transparent", text_color="#555")
+format_label.pack(pady=(10, 2))
 
 format_selector = ctk.CTkSegmentedButton(
-    tab_media,
-    values=["Année / Mois", "Année"],
+    tab_m,
+    values=[t("fmt_ym"), t("fmt_y")],
     command=on_format_change,
     font=("Helvetica", 11, "bold"),
     fg_color="#F0E0E0",
@@ -630,64 +784,72 @@ format_selector = ctk.CTkSegmentedButton(
     height=32,
     corner_radius=16,
 )
-format_selector.set("Année / Mois")
+format_selector.set(t("fmt_ym"))
 format_selector.pack(pady=(0, 5), fill="x")
 
 sort_button = ctk.CTkButton(
-    tab_media, text="TRIER PAR DATE  (YYYY / YYYY-MM)", command=organize_media,
+    tab_m, text=t("sort_btn_ym"), command=organize_media,
     fg_color="#A8E6CF", hover_color="#89D9BB", text_color="#2C3E50",
     font=("Helvetica", 12, "bold"), height=42, corner_radius=21,
 )
 sort_button.pack(pady=5, fill="x")
 
-media_progress = ctk.CTkProgressBar(tab_media, height=10, progress_color="#A8E6CF",
-                                     fg_color="#E0E0E0")
-media_progress.set(0)
-media_progress.pack(pady=(15, 5), fill="x")
-
 # ── Contenu onglet Documents ──
-tab_docs = tabview.tab("📄  Documents")
+tab_d = tabview.tab(t("tab_docs"))
 
 doc_folder_label = ctk.CTkLabel(
-    tab_docs, text="📁  Aucun dossier sélectionné",
+    tab_d, text=t("no_folder"),
     font=("Helvetica", 12, "bold"), corner_radius=10, height=34,
     fg_color="#D6EAF8", text_color="#1A5276",
 )
-doc_folder_label.pack(pady=(12, 8), fill="x")
+doc_folder_label.pack(pady=(10, 7), fill="x")
 
-ctk.CTkButton(
-    tab_docs, text="CHOISIR UN DOSSIER", command=select_doc_folder,
+choose_doc_btn = ctk.CTkButton(
+    tab_d, text=t("choose_folder"), command=select_doc_folder,
     fg_color="#85C1E9", hover_color="#5DADE2", text_color="white",
     font=("Helvetica", 12, "bold"), height=42, corner_radius=21,
-).pack(pady=5, fill="x")
+)
+choose_doc_btn.pack(pady=5, fill="x")
 
-ctk.CTkButton(
-    tab_docs, text="TRIER PAR TYPE DE FICHIER", command=organize_docs,
+sort_docs_btn = ctk.CTkButton(
+    tab_d, text=t("sort_docs_btn"), command=organize_docs,
     fg_color="#A9CCE3", hover_color="#7FB3D3", text_color="#1A3D5C",
     font=("Helvetica", 12, "bold"), height=42, corner_radius=21,
-).pack(pady=5, fill="x")
+)
+sort_docs_btn.pack(pady=5, fill="x")
 
-# Légende des types
-legend_frame = ctk.CTkFrame(tab_docs, fg_color="#EBF5FB", corner_radius=10)
+legend_frame = ctk.CTkFrame(tab_d, fg_color="#EBF5FB", corner_radius=10)
 legend_frame.pack(pady=(10, 5), fill="x")
-ctk.CTkLabel(legend_frame, text="Dossiers créés automatiquement :",
-             font=("Helvetica", 10, "bold"), fg_color="transparent",
-             text_color="#1A5276").pack(pady=(6, 2))
-types_text = "PDF · Word · Excel · PowerPoint · Texte · Archives · Code · Autres"
-ctk.CTkLabel(legend_frame, text=types_text, font=("Helvetica", 10),
-             fg_color="transparent", text_color="#555",
-             wraplength=380).pack(pady=(0, 8))
+legend_title_lbl = ctk.CTkLabel(legend_frame, text=t("legend_title"),
+                                 font=("Helvetica", 10, "bold"), fg_color="transparent",
+                                 text_color="#1A5276")
+legend_title_lbl.pack(pady=(6, 2))
+legend_types_lbl = ctk.CTkLabel(legend_frame, text=t("legend_types"),
+                                 font=("Helvetica", 10), fg_color="transparent",
+                                 text_color="#555", wraplength=380)
+legend_types_lbl.pack(pady=(0, 8))
 
-doc_progress = ctk.CTkProgressBar(tab_docs, height=10, progress_color="#85C1E9",
-                                   fg_color="#E0E0E0")
-doc_progress.set(0)
-doc_progress.pack(pady=(15, 5), fill="x")
-
-# --- Bouton quitter ---
-ctk.CTkButton(
-    main_frame, text="Quitter", command=root.quit,
+# Bouton quitter
+quit_btn = ctk.CTkButton(
+    main_frame, text=t("quit"), command=root.quit,
     fg_color="#BDC3C7", hover_color="#A0A6A8", text_color="#2C3E50",
-    font=("Helvetica", 11, "bold"), height=36, corner_radius=18,
-).pack(pady=(8, 0))
+    font=("Helvetica", 11, "bold"), height=34, corner_radius=17,
+)
+quit_btn.pack(pady=(8, 2))
+
+# Enregistrement des références pour la mise à jour i18n
+_ui_refs.update({
+    "media_folder_label": media_folder_label,
+    "doc_folder_label":   doc_folder_label,
+    "choose_media_btn":   choose_media_btn,
+    "format_label":       format_label,
+    "format_selector":    format_selector,
+    "sort_button":        sort_button,
+    "choose_doc_btn":     choose_doc_btn,
+    "sort_docs_btn":      sort_docs_btn,
+    "legend_title_lbl":   legend_title_lbl,
+    "legend_types_lbl":   legend_types_lbl,
+    "quit_btn":           quit_btn,
+})
 
 root.mainloop()
